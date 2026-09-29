@@ -1,90 +1,99 @@
-# Momentum frontend prototype
+# Momentum · Waypoint
 
-A complete, locally runnable HTML, CSS, and JavaScript design prototype. No backend, database, API key, build step, npm install, or external asset service is required.
+Waypoint is a static frontend prototype for delivery operations. It connects the full handoff journey in one workspace:
 
-## Start
+**Request → Plan → Load → Deliver → Sync → Receive → Resolve**
 
-1. Extract this ZIP completely.
-2. Open `index.html` in a modern browser.
-3. Choose a demo role on the sign-in screen, then press Sign in.
+The prototype is built with plain HTML, CSS, and JavaScript. It does not require a backend, database, API key, package installation, build step, or external asset service.
 
-If your browser restricts local-file storage, use VS Code Live Server, or run `python -m http.server 8000` in this folder and open `http://localhost:8000`. This only serves static files. It is not an application backend.
+## Run locally
 
-## Demo credentials
+### Option 1: Open the page directly
 
-| Persona | Username | Password |
+Open [`index.html`](index.html) in a modern browser, choose a demo role, and select **Sign in**.
+
+### Option 2: Serve the folder locally
+
+Serving the folder over HTTP gives the browser a consistent origin for local storage and is recommended for a complete walkthrough:
+
+```bash
+python -m http.server 8000
+```
+
+Then open [http://localhost:8000](http://localhost:8000).
+
+This is a static file server only; it is not an application backend.
+
+## Demo accounts
+
+All accounts use the password `demo123`.
+
+| Role | Username | Use it to explore |
 | --- | --- | --- |
-| K. Mendis, store manager | store | demo123 |
-| D. Senanayake, dispatcher | dispatch | demo123 |
-| R. Fernando, loader | loader | demo123 |
-| S. Bandara, driver | driver | demo123 |
-| A. Perera, optional administrator | admin | demo123 |
+| Store manager | `store` | Submit orders and confirm received quantities |
+| Dispatcher | `dispatch` | Allocate capacity, validate, publish, and resolve issues |
+| Loader | `loader` | Reconcile shortages and confirm the loading manifest |
+| Driver | `driver` | Run stops, record handovers, and test offline sync |
+| Administrator | `admin` | Manage sample users and inspect the operating directory |
 
-This is intentionally not secure authentication. Accounts and credentials are readable sample data stored in your browser. Never enter real passwords, personal information, or sensitive photos.
+These are intentionally local demo credentials, not secure authentication. Do not enter real passwords, personal information, or sensitive photos.
 
-The four operating roles are the competition scope. The small administrator extension is included at the user's request; it manages local demo users and inspects the reference directory. It does not distract from the four-role delivery story.
+## Suggested walkthrough
 
-## Connected judge walkthrough
+1. Sign in as `store` and open **My orders**. Inspect the chilled replenishment request and its receiving window.
+2. Switch to `dispatch` with **Demo controls**, open **Planning**, assign the Fresh Colombo morning orders, validate the vehicle, and publish the run.
+3. Switch to `loader`. Follow the reverse delivery order, report the five-crate shortage, replenish it, verify the manifest, and confirm loading.
+4. Switch to `driver`. Start the run, arrive at a stop, and record a handover using the sample signature and photo.
+5. Use **Demo controls** to test an offline delivery, reconnect, retry a failed sync, and confirm that the record is reconciled once.
+6. Switch back to `store` and confirm the actual received quantity. A discrepancy creates a reviewable dispatcher issue.
+7. Use `admin` to explore the optional local user-management extension.
 
-Use Demo controls in the header to switch roles without losing shared progress. On mobile, it remains in the header. You can also sign out and sign in with the next account. All roles share data in the same browser and origin.
+The **Demo controls** menu also provides shortcuts for planning, loading shortage, driver-ready, store-receipt-ready, and offline-delivery scenarios. Resetting the demo restores the original fixture and accounts.
 
-1. Start as **store**. Open My orders. Inspect the Chilled replenishment request. Expand references to see the source outlet and receiving window. Optionally create the one additional sample request; it becomes visible in the dispatcher queue. Repeated submission does not create duplicates.
-2. Switch to **dispatcher**, open Planning. Assign Fresh Colombo 02 to the morning run. Fresh Colombo 01 and 03 are already on this draft. Total load is 90 crates, 720 kg, 5.6 m³.
-3. Try assigning Style Colombo. Its volume does not fit. It was deferred previously, so the design explicitly exposes its service priority. Record a deferral with a reason and note, or leave it visible for another run.
-4. Optionally select an ambient van or a truck and validate. Handling or van-only access blocks publication. A Kandy vehicle also fails the home-depot check. Restore VEH035, validate, then publish.
-5. Switch to **loader**. The published plan appears. Loading order is the reverse of delivery order. Fresh Colombo 03 has 15 of 20 crates. Report the shortage, add the five replenished crates, verify all three consignments, then confirm loading.
-6. Switch to **driver**. Start the run and mark arrival at the first stop. Record delivery. Use sample signature and photo for the demo, then save.
-7. At Fresh Colombo 02, mark arrival, record the 40 crates, recipient, signature, and photo. Save draft if you want to explore another screen. Use Demo controls to simulate offline while preserving the saved draft. Save delivery. The sync page shows the record safely pending on this browser.
-8. Simulate reconnect. Optionally use Demo controls to fail the next sync attempt. Retry after the failure. The same pending record is reconciled once, without adding another delivery.
-9. Switch to **store**. Open the Chilled replenishment order and Review receipt. Driver quantities and evidence are visible. Confirm the actual received count. A difference requires a note and produces a dispatcher issue.
-10. Switch to **dispatcher**, Trips, to review the issue and record its resolution. Visit Capacity for a restrained, clearly illustrative future demand outlook.
-11. Switch to **driver**, finish the third stop, then confirm depot return. Driver recording, sync, and store receipt are distinct states.
-12. Optional: sign in as **admin** to add, search, edit, deactivate, and delete demo users. Duplicate usernames are rejected. You cannot delete or disable your own active admin account.
+## What the prototype demonstrates
 
-## Checkpoint shortcuts
+- Role-specific workspaces for store, dispatcher, loader, driver, and administrator users.
+- Order requests, allocation, capacity checks, handling constraints, deferrals, and publication.
+- Loading sequence, shortage reporting, replenishment, and verification gates.
+- Delivery quantities, recipient details, signature/photo evidence, drafts, and offline queueing.
+- Sync retry and duplicate-safe reconciliation states.
+- Separate driver handover and store receipt confirmation checkpoints.
+- Receipt discrepancies and dispatcher issue resolution.
+- Responsive desktop, tablet, and phone layouts with keyboard-focusable controls.
+- Local persistence through `localStorage`, with an in-memory fallback when browser storage is unavailable.
 
-Demo controls has five presets: planning, loading shortage, driver ready, store receipt ready, and offline delivery saved. Applying a preset replaces operational progress after confirmation and preserves user accounts. Reset everything restores the original fixture and accounts.
+## Intentional scope
 
-For the after-cutoff recovery, open Demo controls, enable After-cutoff order scenario, and open Create order. The original date is retained, the revised request moves to 1 Oct, and explicit acknowledgement is required. Inputs remain preserved when switching this setting while editing.
+This is a reviewable interaction and visual prototype, not a production logistics system. It intentionally does not provide live maps, GPS, telemetry, messaging, real authentication, a planning engine, live network synchronization, or unrestricted operational CRUD.
 
-## Deliberate scope
+The fixture uses a coherent Colombo morning run. Vehicle capacity, travel time, fuel balance, route timing, and evidence images are clearly presented as prototype assumptions or sample assets.
 
-- Plain HTML, CSS, JavaScript with hash navigation. Browser Back works.
-- Four operational experiences and a small user-admin extension.
-- Fixed, coherent morning-run fixture. The order form supports one additional sample request (WP-1058), not unrestricted operational CRUD or a planning engine.
-- Interactive allocation, compatibility checks, deferral reasons, loading gates, handover evidence, offline queue, receipt, issue handling, and user CRUD.
-- Local persistence through localStorage, with an in-memory fallback message when unavailable. Session role uses sessionStorage.
-- Simulated connectivity and synchronisation, not real network requests or background uploads. Under local-file mode, all app files are already on the device. When served over HTTP, reload availability depends on the server; this is not a service-worker PWA.
-- Sample signature is marked as a prototype sample. The dock image is an original illustration, not a real proof-of-delivery photograph. Users may attach a local image for interface review.
-- No map because the source outlet data contains no precise locations. Clear stop sequence and receiving constraints are the central decision aid.
-- No real phone number, location tracking, temperature telemetry, trained forecasts, messaging, or production authentication.
+## Project structure
 
-## Responsive design
+```text
+.
+├── index.html                 # Application entry point
+├── styles.css                 # Responsive design system and components
+├── app.js                     # Routes, views, interactions, and local state
+├── data/
+│   └── seed.js                # Offline-readable demo fixture
+├── assets/
+│   ├── mark.svg               # Product mark
+│   ├── route-art.svg          # Login illustration
+│   └── dock-sample.svg        # Sample delivery evidence illustration
+└── docs/
+    ├── design-guide.html      # Personas, flows, rationale, and assumptions
+    └── previews/              # Design-guide preview images
+```
 
-Desktop: stable left navigation, broad content area, compact operational cards, contextual secondary panel.
-Tablet and phone (800px and below): one-column flow, large controls, floating bottom navigation with safe-area spacing. Important statuses remain textual. Tested targets include 1440, 1280, 768, 390, and 360 CSS pixels.
+## Design guide
 
-## Files
+Open [`docs/design-guide.html`](docs/design-guide.html) for the personas, connected flows, screen rationale, recovery scenarios, design system, assumptions, and submission checklist.
 
-- `index.html`: application entry
-- `styles.css`: responsive design system and all component styling
-- `app.js`: routes, renderers, seeded interactions, local persistence
-- `data/seed.js`: offline-readable supplied reference data
-- `data/*.csv`: original challenge reference tables used in the prototype
-- `assets/mark.svg`: Momentum route mark used across the product shell
-- `assets/route-art.svg`: original editorial route illustration
-- `assets/dock-sample.svg`: labelled sample evidence illustration
-- `docs/design-guide.html`: personas, flows, screen rationales, failure scenarios, style guide, assumptions, submission checklist, and video outline
-- `docs/coverage.md`: brief-to-interface mapping and intentional boundaries
-- `docs/QA.md`: verification notes
-- `ASSETS.md`: asset and source attribution
+## Browser support
 
-## Important changes from the earlier Stitch mockups
+Use a current version of Chrome, Edge, Firefox, or Safari. The interface is designed for desktop widths and for phone widths of approximately 390–360 CSS pixels. Browser storage is scoped to the current browser origin.
 
-Fresh deliveries are scheduled before 8 AM, as the booklet requires. The source outlet IDs are OUT001, OUT002, and OUT003; the chosen source vehicle is VEH035. Friendly display names such as Fresh Colombo 02 are derived labels, not invented real store addresses. The earlier Kelaniya, WP-R12, and late-morning examples are not reused.
+## License and usage
 
-VEH035 supports 1,040 kg and 7.0 m³ and belongs to Peliyagoda. The illustrative three-stop run uses 32 km, 16-minute street service allowances, travel buffers, and a sample remaining weekly fuel balance of 120 L. That remaining balance is a demo assumption, not supplied telemetry.
-
-## Designathon hand-in
-
-The included design guide supports the written design deliverables. This ZIP is a reviewable frontend source package, not a claim that the entire competition submission is complete. You still need your team identity, a shareable prototype URL, the unlisted 3 to 5 minute video, and a final disclosure accurately reflecting your team's work. The booklet asks for one design file with distinct pages. Use the included guide and prototype as material for that submission format, or confirm acceptance of your HTML-based design file with the organisers.
+This repository contains a designathon prototype and sample data. Review the source and asset attribution before reusing any part of it in another project.
