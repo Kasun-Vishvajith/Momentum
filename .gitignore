@@ -1,0 +1,25 @@
+# Local/editor files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary and generated files
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# Archives and exported mockups
+*.zip
+figma-board.html
+
+# Reference and verification material not required by the runnable page
+ASSETS.md
+DESIGNATHON_SUBMISSION.md
+data/*.csv
+docs/coverage.md
+docs/QA.md
